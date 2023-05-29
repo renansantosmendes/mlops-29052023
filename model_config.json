@@ -1,0 +1,11 @@
+{
+  "data_file_url": "https://raw.githubusercontent.com/renansantosmendes/lectures-cdas-2023/master/fetal_health_reduced.csv",
+  "mlflow_registry_model_name": "fetal_health_model_v1",
+  "mlflow_run_name": "train_experiment_01",
+  "n_epochs": 20,
+  "loss": "sparse_categorical_crossentropy",
+  "optimizer": "adam",
+  "validation_split" : 0.2,
+  "verbose": 3,
+  "seed": 42
+}
