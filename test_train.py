@@ -21,8 +21,21 @@ def sample_data():
     return data
 
 
-def test_get_data():
-    X, y = get_data()
+@pytest.fixture
+def parameters():
+    return {"data_file_url": "https://raw.githubusercontent.com/renansantosmendes/lectures-cdas-2023/master/fetal_health_reduced.csv",
+            "mlflow_registry_model_name": "test_model",
+            "mlflow_run_name": "test_train_pipeline",
+            "n_epochs": 1,
+            "loss": "sparse_categorical_crossentropy",
+            "optimizer": "adam",
+            "validation_split": 0.2,
+            "verbose": 3,
+            "seed": 42}
+
+
+def test_get_data(parameters):
+    X, y = get_data(parameters)
 
     assert isinstance(X, pd.DataFrame)
     assert isinstance(y, pd.Series)
@@ -41,22 +54,22 @@ def test_process_data(sample_data):
     assert not y_test.empty
 
 
-def test_create_model(sample_data):
+def test_create_model(sample_data, parameters):
     X = sample_data.drop(["fetal_health"], axis=1)
     input_shape = X.shape[1]
-    model = create_model(input_shape)
+    model = create_model(input_shape, parameters)
 
     assert isinstance(model, Sequential)
     assert len(model.layers) > 0
     assert model.trainable
 
 
-def test_train_model(sample_data):
+def test_train_model(sample_data, parameters):
     X = sample_data.drop(["fetal_health"], axis=1)
     y = sample_data["fetal_health"]
     X_train, y_train, X_test, y_test = process_data(X, y)
-    model = create_model(X_train.shape[1])
-    train_model(model, X_train, y_train, 5)
+    model = create_model(X_train.shape[1], parameters)
+    train_model(model, X_train, y_train, parameters)
 
     assert model.history.history['loss'][-1] > 0.0
     assert model.history.history['val_loss'][-1] > 0.0
