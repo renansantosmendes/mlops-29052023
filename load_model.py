@@ -20,7 +20,7 @@ def load_model(client):
     registered_model = client.get_registered_model('fetal_health_model_v1')
     run_id = registered_model.latest_versions[-1].run_id
     logged_model = f'runs:/{run_id}/model'
-    loaded_model = mlflow.pyfunc.load_model(logged_model)
+    loaded_model = mlflow.pyfunc.load_model_from_registry(logged_model)
     return loaded_model
 
 

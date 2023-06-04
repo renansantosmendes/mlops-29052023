@@ -23,7 +23,7 @@ parser.add_argument('--mlflow_tracking_password', required=True)
 
 
 def get_args(arguments):
-    train_parameters = dict()
+    train_parameters = {}
     try:
         train_parameters['mlflow_tracking_uri'] = arguments.mlflow_tracking_uri
         train_parameters['mlflow_tracking_username'] = arguments.mlflow_tracking_username
