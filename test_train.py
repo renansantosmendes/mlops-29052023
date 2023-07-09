@@ -72,5 +72,5 @@ def test_train_model(sample_data, parameters):
     train_model(model, X_train, y_train, parameters)
 
     assert model.history.history['loss'][-1] > 0.0
-    assert model.history.history['val_loss'][-1] < 0.0
+    assert model.history.history['val_loss'][-1] > 0.0
 
